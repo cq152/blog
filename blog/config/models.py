@@ -30,10 +30,13 @@ class SidePane(models.Model):
     type = models.PositiveIntegerField(choices=TPTE_ITEMS, default=TYPE_NORMAL, verbose_name='文章类型')
     content = models.CharField(max_length=500, blank=True, verbose_name='内容', help_text='如果设置的不是HTML类型，可为空')
     author = models.ForeignKey(User, verbose_name='作者', on_delete=models.CASCADE)
-    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间', editable=False)
 
     class Meta:
         verbose_name = verbose_name_plural = '侧边栏'
+
+    def __str__(self):
+        return self.title
 
 
 class Link(models.Model):
@@ -49,12 +52,15 @@ class Link(models.Model):
     link = models.URLField(verbose_name='链接')
     status = models.PositiveIntegerField(choices=STATUS_ITEMS, default=STATUS_NORMAL, verbose_name='状态')
     author = models.ForeignKey(User, verbose_name='作者', on_delete=models.CASCADE)
-    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间', editable=False)
     weight = models.PositiveIntegerField(default=1,choices=zip(range(1,6), range(1,6)), verbose_name='权重',
                                          help_text='权重高显示靠前')
 
     class Meta:
         verbose_name = verbose_name_plural = '友链'
+
+    def __str__(self):
+        return self.name
 
 
 

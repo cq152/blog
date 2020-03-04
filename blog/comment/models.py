@@ -21,11 +21,14 @@ class Comment(models.Model):
     site = models.URLField(verbose_name='网站')
     email = models.EmailField(verbose_name='邮箱')
     status = models.PositiveIntegerField(choices=STATUS_ITEMS, default=STATUS_NORMAL, verbose_name='状态')
-    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间', editable=False)
 
     class Meta:
         verbose_name = verbose_name_plural = '评论'
         ordering = ['-id']      # 降序显示
+
+    def __str__(self):
+        return self.content
 
 
 
