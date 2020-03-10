@@ -16,4 +16,4 @@ class LinkAdmin(BaseOwnerAdmin):
 class SidePaneAdmin(BaseOwnerAdmin):
     list_display = ['title', 'status', 'type', 'author']
 
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'status']

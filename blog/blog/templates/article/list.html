@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>博客列表信息页面</title>
+</head>
+<body>
+    <center><h1> list </h1></center>
+
+    <div>
+        顶部分类:
+        {% for top in top_categories %}
+            <a href="{% url 'category' top.id %}"> {{ top.name }} &nbsp </a>
+            &nbsp
+        {% endfor %}
+    </div>
+    <!--
+    <div>
+        侧边栏：
+        {% for side in sides %}
+            <h4>标题：{{ side.title }}</h4>
+            <p>内容：{{ side.content }}</p>
+        {% endfor %}
+    </div>
+    <hr/>
+    -->
+    {% if tag %}
+        标签页：{{ tag.name }}
+    {% endif %}
+
+    {% if category %}
+        分类页：{{ category.name }}
+    {% endif %}
+
+    <ul>
+        {% for post in post_list %}
+        <li>
+            <a href="{% url 'detail' post.id %}">{{ post.title }}</a>
+            <div>
+                <span>作者：{{ post.author.username }}</span>
+                <span>分类：{{ post.category.name }}</span>
+            </div>
+            <p>{{ post.summary }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% if post_list.has_previous %} <a href="?page={{ post_list.number|add:'-1' }}">上一页</a> {% endif %}
+    Page {{ post_list.number }} of {{ post_list.paginator.num_pages }}
+    {% if post_list.has_next %} <a href="?page={{ post_list.number|add:'1' }}">下一页</a> {% endif %}
+
+    <hr/>
+    <div>
+        底部分类:
+        {% for normal in normal_categories %}
+            <a href="{% url 'category' normal.id %}"> {{ normal.name }} &nbsp </a>
+        {% endfor %}
+    </div>
+</body>
+</html>

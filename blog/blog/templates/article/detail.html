@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>博客详细信息页面</title>
+</head>
+<body>
+    <a href="{% url 'index' %}">首页</a>
+
+    <div>
+        顶部分类:
+        {% for top in top_categories %}
+            <a href="{% url 'category' top.id %}"> {{ top.name }} &nbsp　</a>
+        {% endfor %}
+    </div>
+
+    <div>
+        侧边栏：
+        {% for side in sides %}
+            <h4>标题：{{ side.title }}</h4>
+            <p>内容：{{ side.content }}</p>
+        {% endfor %}
+    </div>
+    <hr/>
+    {% if post %}
+        <h1> {{ post.title }} </h1>
+        <div>
+            <span>分类：{{ post.category.name }}</span>
+            <span>作者：{{ post.author.username }}</span>
+        </div>
+        <hr/>
+        <p>
+            {{ post.content }}
+        </p>
+    {% endif%}
+    <hr/>
+    <div>
+        底部分类:
+        {% for normal in normal_categories %}
+            <a href="{% url 'category' normal.id %}"> {{ normal.name }} &nbsp　</a>
+        {% endfor %}
+    </div>
+</body>
+</html>

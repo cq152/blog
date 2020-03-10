@@ -3,7 +3,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
 
 class SidePane(models.Model):
 
@@ -37,6 +36,14 @@ class SidePane(models.Model):
 
     def __str__(self):
         return self.title
+
+    @classmethod
+    def get_show(cls):
+        sides = cls.objects.filter(status=cls.STATUS_SHOW)
+
+        return {
+            'sides': sides
+        }
 
 
 class Link(models.Model):
