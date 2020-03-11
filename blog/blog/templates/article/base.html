@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <a href="{% url 'index' %}">首页</a><br/>
+
+    <div>
+        顶部分类:
+        {% for top in top_categories %}
+            <a href="{% url 'category' top.id %}"> {{ top.name }} &nbsp </a>
+            &nbsp
+        {% endfor %}
+    </div>
+    <hr/>
+    <div>
+        侧边栏：
+        {% for side in sides %}
+            <h4>标题：{{ side.title }}</h4>
+            {% autoescape off %}
+            {{ side.display_html }}
+            {% endautoescape %}
+        {% endfor %}
+    </div>
+    <hr/>
+
+    {% block main %}
+    {% endblock %}
+
+    <hr/>
+    <div>
+        底部分类:
+        {% for normal in normal_categories %}
+            <a href="{% url 'category' normal.id %}"> {{ normal.name }} &nbsp </a>
+        {% endfor %}
+    </div>
+</body>
+</html>

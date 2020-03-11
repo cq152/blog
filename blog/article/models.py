@@ -30,6 +30,19 @@ class Category(models.Model):
     @classmethod
     def get_top(cls):
         categories = cls.objects.filter(status=cls.STATUS_NORMAL)
+        """
+        直接从数据库取值,耗费数据库链接查询资源
+        top_categories = categories.filter(is_top=True)
+        normal_categories = categories.filter(is_top=False)
+        """
+
+        """
+        列表推导式, 两次for循环
+        top_categories = [cate for cate in categories if cate.is_top]
+        normal_categories = [cate for cate in categories if not cate.is_top]
+        """
+
+        # 一次for循环
         top_categories = []
         normal_categories = []
         for cate in categories:
@@ -37,6 +50,7 @@ class Category(models.Model):
                 top_categories.append(cate)
             else:
                 normal_categories.append(cate)
+
         return {
             'top_categories': top_categories,
             'normal_categories': normal_categories
@@ -100,6 +114,7 @@ class Post(models.Model):
 
     @staticmethod
     def get_by_tag(tag_id):
+        """ 通过标签得到文章 """
         try:
             tag = Tag.objects.get(id=tag_id)
         except Tag.DoesNotExist:
@@ -112,6 +127,7 @@ class Post(models.Model):
 
     @staticmethod
     def get_by_category(category_id):
+        """ 通过分类得到文章 """
         try:
             category = Category.objects.get(id=category_id)
         except Category.DoesNotExist:
@@ -124,12 +140,14 @@ class Post(models.Model):
 
     @classmethod
     def get_latest_posts(cls):
-        queryset = cls.objects.filter(status=cls.STATUS_NORMAL)
-
-        return queryset
+        """ 得到最新10篇文章 """
+        latest_posts = cls.objects.filter(status=cls.STATUS_NORMAL)[:10:1]
+        return  latest_posts
 
     @classmethod
-    def get_hot_posts(cls):
-        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')
+    def get_hottest_posts(cls):
+        """ 得到最热10篇文章 """
+        hottest_posts = cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')[:10:1]
+        return  hottest_posts
 
 

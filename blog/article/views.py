@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from article.models import Tag, Post, Category
+from comment.models import Comment
 from config.models import SidePane
 
 
@@ -14,8 +15,11 @@ def post_list(request, category_id=None, tag_id=None):
 
     # 测试代码２
     # return render(request, 'article/list.html', context={'name': 'post_list'})
+
+    # tag、category传递上下文供模板使用
     tag = None
     category = None
+    # 分页所需变量
     page = request.GET.get('page', 1)
     page_size = 4
     try:
@@ -43,8 +47,14 @@ def post_list(request, category_id=None, tag_id=None):
         'category': category
     }
 
+    # 配置页面通用部分，分类、侧边栏、最新文章、最热文章
     context.update(Category.get_top())
     context.update(SidePane.get_show())
+
+    # 将下面两个方法以及html中的if判断移入到config的models中处理，返回渲染后的字符串，故此作废
+    # 新增的属性方法在html文件中用sidepane直接调用
+    # context.update(Post.get_latest_posts())
+    # context.update(Comment.get_recently_comments())
 
     return render(request, 'article/list.html', context=context)
 

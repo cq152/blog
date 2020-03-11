@@ -30,5 +30,11 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
 
+    @classmethod
+    def get_recently_comments(cls):
+        """ 得到最近评论 """
+        recently_comments = cls.objects.filter(status=cls.STATUS_NORMAL)[:10:1]
+        return recently_comments
+
 
 
