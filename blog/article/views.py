@@ -1,80 +1,57 @@
-from django.core.paginator import Paginator, EmptyPage
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.views.generic import ListView
+from django.views.generic import DetailView
 
-# Create your views here.
 from article.models import Tag, Post, Category
-from comment.models import Comment
 from config.models import SidePane
 
 
-def post_list(request, category_id=None, tag_id=None):
-    # 测试代码１
-    # content = 'post_list category_id={0},　tag_id={1}'.format(category_id, tag_id)
-    # return HttpResponse(content)
+class CommonMixin(object):
+    def get_context_data(self, **kwargs):
+        # 方法一
+        context = super(CommonMixin, self).get_context_data(**kwargs)
+        context.update(Category.get_top())
+        context.update(SidePane.get_show())
+        return context
 
-    # 测试代码２
-    # return render(request, 'article/list.html', context={'name': 'post_list'})
-
-    # tag、category传递上下文供模板使用
-    tag = None
-    category = None
-    # 分页所需变量
-    page = request.GET.get('page', 1)
-    page_size = 4
-    try:
-        page = int(page)
-    except TypeError:
-        page = 1
-
-    if tag_id:
-        posts, tag = Post.get_by_tag(tag_id)
-    elif category_id:
-        posts, category = Post.get_by_category(category_id)
-    else:
-        posts = Post.get_latest_posts()
-
-    # 分页
-    paginator = Paginator(posts, page_size)
-    try:
-        posts = paginator.page(page)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-
-    context = {
-        'post_list': posts,
-        'tag': tag,
-        'category': category
-    }
-
-    # 配置页面通用部分，分类、侧边栏、最新文章、最热文章
-    context.update(Category.get_top())
-    context.update(SidePane.get_show())
-
-    # 将下面两个方法以及html中的if判断移入到config的models中处理，返回渲染后的字符串，故此作废
-    # 新增的属性方法在html文件中用sidepane直接调用
-    # context.update(Post.get_latest_posts())
-    # context.update(Comment.get_recently_comments())
-
-    return render(request, 'article/list.html', context=context)
+        # 方法二
+        # context = Category.get_top()
+        # context.update(SidePane.get_show())
+        # return super(CommonMixin, self).get_context_data(**context)
 
 
-def post_detail(request, post_id=None):
-    # 测试代码１
-    # content = 'post_detail post_id = {0}'.format(post_id)
-    # return HttpResponse(content)
+class BasePostView(CommonMixin, ListView):
+    model = Post
+    template_name = 'article/list.html'
+    context_object_name = 'post_list'
+    paginate_by = 4
 
-    # 测试代码２
-    # return render(request, 'article/detail.html', context={'name': 'post_detail'})
 
-    try:
-        post = Post.objects.get(id=post_id)
-    except Post.DoesNotExist:
-        post = None
+class PostListView(BasePostView):
+    pass
 
-    context = {'post': post}
 
-    context.update(Category.get_top())
-    context.update(SidePane.get_show())
+class CategoryView(BasePostView):
+    def get_queryset(self):
+        qs = super(CategoryView, self).get_queryset()
+        cate_id = self.kwargs.get('category_id')
+        qs = qs.filter(category_id=cate_id)
 
-    return render(request, 'article/detail.html', context=context)
+        return qs
+
+
+class TagView(BasePostView):
+    def get_queryset(self):
+        tag_id = self.kwargs.get('tag_id')
+        try:
+            tag = Tag.objects.get(id=tag_id)
+        except Tag.DoesNotExist:
+            tag = []
+        qs = tag.post_set.all()
+
+        return qs
+
+
+class PostDetailView(CommonMixin, DetailView):
+    model = Post
+    template_name = 'article/detail.html'
+    context_object_name = 'post'
