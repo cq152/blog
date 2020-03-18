@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <!-- 响应式元标签 -->
+    <meta name="viewport" content="width=device-width, initial-scale=10">
+    <!--　使用bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        rel="stylesheet" media="screen">
+</head>
+<body>
+    <div class="container head">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#">首页</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Python<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Django</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Linux
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Tornado</a>
+                            <a class="dropdown-item" href="#">Flask</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">API</a>
+                        </div>
+                    </li>
+                </ul>
+
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+                </form>
+            </div>
+        </nav>
+
+        <div class="jumbotron">
+          <h1 class="display-7">多人博客系統</h1>
+          <p class="lead">这是基于Django开发的多人博客系统，在里面有python,Django,linux,网络知识的学习与分享。</p>
+        </div>
+    </div>
+
+    <div class="container main">
+        <div class="row">
+            <div class="col-9">
+                <div class="card post">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="#">这里是标题</a></h5>
+                        <span class="card-link">作者：<a href="#">常琴</a></span>
+                        <span class="card-link">分类：<a href="#">常琴</a></span>
+                        <span class="card-link">标签：<a href="#">常琴</a></span>
+                        <p class="card-text">这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要 <a href="＃">详细</a> </p>
+                    </div>
+                </div>
+                <div class="card post">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="#">这里是标题</a></h5>
+                        <span class="card-link">作者：<a href="#">常琴</a></span>
+                        <span class="card-link">分类：<a href="#">常琴</a></span>
+                        <span class="card-link">标签：<a href="#">常琴</a></span>
+                        <p class="card-text">这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要 <a href="＃">详细</a> </p>
+                    </div>
+                </div>
+                <div class="card post">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="#">这里是标题</a></h5>
+                        <span class="card-link">作者：<a href="#">常琴</a></span>
+                        <span class="card-link">分类：<a href="#">常琴</a></span>
+                        <span class="card-link">标签：<a href="#">常琴</a></span>
+                        <p class="card-text">这是摘要这是摘要这是摘要这是摘要这是摘要这是摘要 <a href="＃">详细</a> </p>
+                    </div>
+                </div>
+                <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+                page 1 of 1
+                <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+            </div>
+                        
+            <div class="col-3">
+                <div class="card sidebar">
+                    <div class="card-body">
+                        <h4 class="card-title"><a href="#">关于博主</a></h4>
+                        <p class="card-text">互联网行业挣扎的菜鸟</p>
+                    </div>
+                </div>
+                <div class="container">
+                    <nav class="nav category">
+                        <a href="#" class="nav-link">读书</a>
+                        <a href="#" class="nav-link">工作经历</a>
+                        <a href="#" class="nav-link">随记分享</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+
+        <div class="container power">
+            <span class="text-muted">Copyright© 2020 | Power by CQ</span>
+        </div>
+    </footer>
+</body>
+</html>

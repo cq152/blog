@@ -141,13 +141,13 @@ class Post(models.Model):
     @classmethod
     def get_latest_posts(cls):
         """ 得到最新10篇文章 """
-        latest_posts = cls.objects.filter(status=cls.STATUS_NORMAL)[:10:1]
+        latest_posts = cls.objects.filter(status=cls.STATUS_NORMAL)[:5:1]
         return  latest_posts
 
     @classmethod
     def get_hottest_posts(cls):
         """ 得到最热10篇文章 """
-        hottest_posts = cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')[:10:1]
+        hottest_posts = cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')[:5:1]
         return  hottest_posts
 
 

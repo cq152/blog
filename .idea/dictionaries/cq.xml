@@ -2,10 +2,14 @@
   <dictionary name="cq">
     <words>
       <w>autoescape</w>
+      <w>clearfix</w>
+      <w>dropdown</w>
       <w>elif</w>
       <w>endautoescape</w>
       <w>endblock</w>
       <w>endfor</w>
+      <w>jumbotron</w>
+      <w>navbar</w>
       <w>sidepane</w>
     </words>
   </dictionary>

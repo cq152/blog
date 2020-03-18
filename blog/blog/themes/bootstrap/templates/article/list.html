@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends './base.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        {% if tag %}
+            标签页：{{ tag.name }}
+        {% endif %}
+
+        {% if category %}
+            分类页：{{ category.name }}
+        {% endif %}
+    {% endblock %}
+
+</head>
+<body>
+    {% block main %}
+        {% for post in post_list %}
+        <div class="card" style="border:none">
+            <div calss="card-body">
+                <h4 class="card-title" style="border-bottom:1px solid #ccc;">
+                    <a href="{% url 'detail' post.id %}" style="color:#333">{{ post.title }}</a>
+                </h4>
+                <span class="card-link" style="color:#999">作者：{{ post.author.username }}</span>
+                <span class="card-link" style="color:#999">分类：
+                    <a href="{% url 'category' post.category.id%}" style="color:#428bca">{{ post.category.name }}</a>
+                </span>
+                <span class="card-link" style="color:#999">标签：
+                    {% for tag in post.tag.all %}
+                        <a class="a" href="{% url 'tag' tag.id %}" style="color:#428bca">{{ tag.name }}</a>
+                    {% endfor %}
+                </span>
+                <p class="card-text" style="padding:1rem">
+                    {{ post.summary }}
+                    <a href="{% url 'detail' post.id %}" style="color:#428bca">详细</a>
+                </p>
+            </div>
+        </div>
+        <div class="clearfix" style="margin-bottom: 10px;"></div>
+        {% endfor %}
+    <br>
+    {% if page_obj.has_previous %} <a href="?page={{ page_obj.previous_page_number }}" style="color:#428bca">上一页</a> {% endif %}
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    {% if page_obj.has_next %} <a href="?page={{ page_obj.next_page_number }}" style="color:#428bca">下一页</a> {% endif %}
+
+    {% endblock %}
+</body>
+</html>
