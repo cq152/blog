@@ -8,6 +8,7 @@
       <w>endautoescape</w>
       <w>endblock</w>
       <w>endfor</w>
+      <w>jsonapi</w>
       <w>jumbotron</w>
       <w>navbar</w>
       <w>sidepane</w>

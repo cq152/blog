@@ -41,11 +41,11 @@
         </div>
         <div class="clearfix" style="margin-bottom: 10px;"></div>
         {% endfor %}
-    <br>
+
     {% if page_obj.has_previous %} <a href="?page={{ page_obj.previous_page_number }}" style="color:#428bca">上一页</a> {% endif %}
     Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
     {% if page_obj.has_next %} <a href="?page={{ page_obj.next_page_number }}" style="color:#428bca">下一页</a> {% endif %}
-
     {% endblock %}
+    <br>
 </body>
 </html>

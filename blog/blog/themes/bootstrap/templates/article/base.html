@@ -2,33 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}首页{% endblock %}多人共享博客系统</title>
+    <title>{% block title %}首页{% endblock %}Django博客系统</title>
     <!-- 响应式元标签 -->
     <meta name="viewport" content="width=device-width, initial-scale=10">
     <!--　使用bootstrap -->
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .container-fluid{
-            margin-left: 100px;
-            margin-right: 70px;
-        }
-        .navbar{
-            margin-left: 100px;
-            margin-right: 70px;
-        }
-        .jumbotron{
-            margin-left: 100px;
-            margin-right: 70px;
-        }
-        .row{
-            margin-left: 100px;
-            margin-right: 70px;
-        }
 
-    </style>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{% url 'index' %}">首页</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -47,32 +29,26 @@
     </nav>
 
     <div class="jumbotron">
-        <h1 class="display-7">多人博客系統</h1>
+        <h1 class="display-7">CQ的博客</h1>
         <p class="lead">这是基于Django开发的多人博客系统，里面有python,Django,linux,网络知识的学习与分享。</p>
     </div>
 </div>
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col-md-9 content">
             {% block main %}
             {% endblock %}
         </div>
         <div class="col-md-3 ">
-            <div class="card introduce">
-                <div class="card-body">
-                    <center><h4 class="card-title">每日一句</h4></center>
-                    <p class="card-text">每个人都是月亮，都有不向人展示的一面</p>
-                </div>
-            </div>
             {% for side in sides %}
             <div class="card sidebar">
-                <div class="card-body">
-                    <h4 class="card-title">{{ side.title }}</h4>
+                <div class="card-body" style="padding:0">
+                    <center><h4 class="card-title" style="background-color: #e9ecef;">{{ side.title }}</h4></center>
                     <p>
                         {% autoescape off %}
                         {{ side.display_html }}
-                        {% endautoescape %}
+                        {% endautoescape%}
                     </p>
                 </div>
             </div>
@@ -83,17 +59,17 @@
 </div>
 
 <footer classs="footer">
-    <div class="container-fluid">
+    <div class="container">
             <br/>
             <nav class="nav category">
                 <p>其他分类：</p>
                 {% for normal in normal_categories %}
-                    <a class="nav-link" href="{% url 'category' normal.id %}"　 style="color:#428bca"> {{ normal.name }} &nbsp </a>
+                    <a class="nav-link" href="{% url 'category' normal.id %}"　 style="color:#428bca; padding: 0rem 0rem;"> {{ normal.name }} &nbsp </a>
                 {% endfor %}
             </nav>
         </div>
     <div class="container">
-        <span class="text-muted">Copyright© 2020 | Power by CQ</span>
+        <center><span class="text-muted">Copyright© 2020 | Power by CQ</span></center>
     </div>
 </footer>
 </body>

@@ -1,8 +1,10 @@
 # -*- coding:utf-8 -*-
+import json
 
 from django.contrib.auth.models import User
 from django.db import models
 from django.template.loader import render_to_string
+from pip._vendor import requests
 
 
 class SidePane(models.Model):
@@ -19,7 +21,7 @@ class SidePane(models.Model):
     TYPE_RECENT = 2
     TYPE_COMMENTS = 3
     TYPE_ITEMS = [
-        (TYPE_NORMAL, 'HTML'),
+        (TYPE_NORMAL, '每日一句'),
         (TYPE_HOT, '最热文章'),
         (TYPE_RECENT, '最新文章'),
         (TYPE_COMMENTS, '最多评论')
@@ -54,7 +56,9 @@ class SidePane(models.Model):
 
         result = ''
         if self.type == self.TYPE_NORMAL:
-            result = self.content
+            # result = self.content
+            # 添加每日一句
+            result = self.get_chicken_soup()
         elif self.type == self.TYPE_RECENT:
             context = {'posts': Post.get_latest_posts()}
             result = render_to_string('config/block/sidebar_posts.html', context)
@@ -66,6 +70,17 @@ class SidePane(models.Model):
             result = render_to_string('config/block/sidebar_comments.html', context)
 
         return result
+
+    @staticmethod
+    def get_chicken_soup():
+        """ 获取金山词霸的中英文每日一句 """
+        url = 'http://open.iciba.com/dsapi/'        # 金山词霸免费开放的jsonAPI借口
+        req = requests.get(url)
+        req_text = json.loads(req.text)
+        english_text = req_text['content']
+        chinese_text = req_text['note']
+        soup = english_text + "<br/>" + chinese_text
+        return soup
 
 
 class Link(models.Model):
