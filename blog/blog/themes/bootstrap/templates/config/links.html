@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "../article/base.html" %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>友链</title>
+</head>
+<body>
+{% block main %}
+    <table>
+        <tr>
+            <th>网站</th>
+            <th>描述</th>
+        </tr>
+        {% for link in links %}
+        <tr>
+            <td><a href="{{ link.link }}" target="_blank">{{ link.name }}</a></td>
+            <td>{{ link.desc }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+</body>
+</html>

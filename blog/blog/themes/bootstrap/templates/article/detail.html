@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% extends './base.html' %}
+{% load comment_block %}
 <head>
     <meta charset="UTF-8">
     {% block title %}{{ post.title }}{% endblock %}
@@ -11,19 +12,29 @@
     {% if post %}
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">主页</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'category' post.category.id %}">{{ post.category.name }}</a></li>
+                <li class="breadcrumb-item"><a href="/" style="color:#428bca">主页</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'category' post.category.id %}" style="color:#428bca">{{ post.category.name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
             </ol>
         </nav>
         <div class="card post">
             <div class="card-body">
                 <h3 class="card-title"> {{ post.title }} </h3>
-                <span class="card-link">作者：{{ post.author.username }}</span>
-                <span class="card-link">分类：<a href="{% url 'category' post.category.id%}">{{ post.category.name }}</a></span>
+                <span class="card-link">作者：
+                    <a href="{% url 'author' post.author.id %}" style="color:#428bca">
+                        {{ post.author.username }}
+                    </a>
+                </span>
+                <span class="card-link">分类：
+                    <a href="{% url 'category' post.category.id%}" style="color:#428bca">
+                        {{ post.category.name }}
+                    </a>
+                </span>
                 <span class="card-link">标签：
                     {% for tag in post.tag.all %}
-                        <a href="{% url 'tag' tag.id %}">{{ tag.name }}</a>
+                        <a href="{% url 'tag' tag.id %}" style="color:#428bca">
+                            {{ tag.name }}
+                        </a>
                     {% endfor %}
                 </span>
                 <span class="card-link">创建时间：{{ post.created_time }}</span>
@@ -33,7 +44,7 @@
             </div>
         </div>
     {% endif %}
-
+    {% comment_block request.path %}
     {% endblock %}
 </body>
 </html>

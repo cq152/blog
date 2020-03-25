@@ -54,11 +54,11 @@ class CategoryAuthorFilter(admin.SimpleListFilter):
     title = "分类过滤器"
     parameter_name = "owner_category"
 
-    # ？？？
+    # 重写
     def lookups(self, request, model_admin):
         return Category.objects.filter(author=request.user).values_list("id", "name")
 
-    # ？？？
+    # 重写
     def queryset(self, request, queryset):
         category_id = self.value()
         if category_id:
@@ -94,7 +94,7 @@ class PostAdmin(BaseOwnerAdmin):
             'fields': ('summary', 'content')
         }),
         ('额外信息', {
-            'classes': ('collapse',),
+            # 'classes': ('collapse',),
             'fields': ('tag',)
         })
     )

@@ -24,13 +24,21 @@
                 <h4 class="card-title" style="border-bottom:1px solid #ccc;">
                     <a href="{% url 'detail' post.id %}" style="color:#333">{{ post.title }}</a>
                 </h4>
-                <span class="card-link" style="color:#999">作者：{{ post.author.username }}</span>
+                <span class="card-link" style="color:#999">作者：
+                    <a href="{% url 'author' post.author.id %}"  style="color:#428bca">
+                        {{ post.author.username }}
+                    </a>
+                </span>
                 <span class="card-link" style="color:#999">分类：
-                    <a href="{% url 'category' post.category.id%}" style="color:#428bca">{{ post.category.name }}</a>
+                    <a href="{% url 'category' post.category.id %}" style="color:#428bca">
+                        {{ post.category.name }}
+                    </a>
                 </span>
                 <span class="card-link" style="color:#999">标签：
                     {% for tag in post.tag.all %}
-                        <a class="a" href="{% url 'tag' tag.id %}" style="color:#428bca">{{ tag.name }}</a>
+                        <a class="a" href="{% url 'tag' tag.id %}" style="color:#428bca">
+                            {{ tag.name }}
+                        </a>
                     {% endfor %}
                 </span>
                 <p class="card-text" style="padding:1rem">
@@ -42,9 +50,25 @@
         <div class="clearfix" style="margin-bottom: 10px;"></div>
         {% endfor %}
 
-    {% if page_obj.has_previous %} <a href="?page={{ page_obj.previous_page_number }}" style="color:#428bca">上一页</a> {% endif %}
+    {% if page_obj.has_previous %}
+        {% if keyword %}
+            <a href="?page={{ page_obj.previous_page_number }}&keyword={{ keyword }}" style="color:#428bca">
+                上一页
+            </a>
+        {% else %}
+            <a href="?page={{ page_obj.previous_page_number }}" style="color:#428bca">上一页</a>
+        {% endif %}
+    {% endif %}
     Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-    {% if page_obj.has_next %} <a href="?page={{ page_obj.next_page_number }}" style="color:#428bca">下一页</a> {% endif %}
+    {% if page_obj.has_next %}
+        {% if keyword %}
+            <a href="?page={{ page_obj.next_page_number }}&keyword={{ keyword }}" style="color:#428bca">
+                下一页
+            </a>
+        {% else %}
+                <a href="?page={{ page_obj.next_page_number }}" style="color:#428bca">下一页</a>
+        {% endif %}
+    {% endif %}
     {% endblock %}
     <br>
 </body>

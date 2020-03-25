@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.views.generic import ListView
 from django.views.generic import DetailView
 
@@ -55,3 +56,35 @@ class PostDetailView(CommonMixin, DetailView):
     model = Post
     template_name = 'article/detail.html'
     context_object_name = 'post'
+
+    # 由comment的templatetags封装，此处不再需要渲染
+    # def get_context_data(self, **kwargs):
+    #     context = super(PostDetailView, self).get_context_data(**kwargs)
+    #     context.update({
+    #         'comment_form': CommentForm,
+    #         'comment_list': Comment.get_by_target(self.request.path)
+    #     })
+    #     return context
+
+
+class SearchView(BasePostView):
+    def get_context_data(self, **kwargs):
+        context = super(SearchView, self).get_context_data(**kwargs)
+        context.update(
+            {'keyword': self.request.GET.get('keyword', '')}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        keyword = self.request.GET.get('keyword')
+        if not keyword:
+            return queryset
+        return queryset.filter(Q(title__icontains=keyword) | Q(summary__icontains=keyword))
+
+
+class AuthorView(BasePostView):
+    def get_queryset(self):
+        queryset = super(AuthorView, self).get_queryset()
+        author_id = self.kwargs.get('author_id')
+        return queryset.filter(author_id=author_id)

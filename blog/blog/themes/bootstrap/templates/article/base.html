@@ -21,9 +21,9 @@
                 </li>
                 {% endfor %}
             </ul>
-            <form class="form-inline my-2 my-lg-0" 　action="GET">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+            <form class="form-inline my-2 my-lg-0" action="/search/" method="GET">
+                <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="Search" aria-label="Search" value="{{ keyword }}">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Go!</button>
             </form>
         </div>
     </nav>
@@ -64,7 +64,7 @@
             <nav class="nav category">
                 <p>其他分类：</p>
                 {% for normal in normal_categories %}
-                    <a class="nav-link" href="{% url 'category' normal.id %}"　 style="color:#428bca; padding: 0rem 0rem;"> {{ normal.name }} &nbsp </a>
+                    <a class="nav-link" href="{% url 'category' normal.id %}" style="color:#428bca; padding: 0rem 0rem;"> {{ normal.name }} &nbsp </a>
                 {% endfor %}
             </nav>
         </div>

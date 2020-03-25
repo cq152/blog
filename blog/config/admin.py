@@ -9,7 +9,7 @@ from config.models import Link, SidePane
 @admin.register(Link, site=custom_site)
 class LinkAdmin(BaseOwnerAdmin):
     list_display = ['name', 'link', 'status', 'author', 'created_time']
-    fields = ['name', 'link', 'status', 'weight']
+    fields = ['name', 'link', 'status', 'weight', 'desc']
 
 
 @admin.register(SidePane, site=custom_site)

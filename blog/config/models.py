@@ -24,7 +24,7 @@ class SidePane(models.Model):
         (TYPE_NORMAL, '每日一句'),
         (TYPE_HOT, '最热文章'),
         (TYPE_RECENT, '最新文章'),
-        (TYPE_COMMENTS, '最多评论')
+        (TYPE_COMMENTS, '最新评论')
     ]
 
     title = models.CharField(max_length=50, verbose_name='标题')
@@ -99,6 +99,7 @@ class Link(models.Model):
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间', editable=False)
     weight = models.PositiveIntegerField(default=1,choices=zip(range(1,6), range(1,6)), verbose_name='权重',
                                          help_text='权重高显示靠前')
+    desc = models.CharField(max_length=255, default='', verbose_name='描述')
 
     class Meta:
         verbose_name = verbose_name_plural = '友链'
