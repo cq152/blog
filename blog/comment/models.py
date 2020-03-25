@@ -15,9 +15,10 @@ class Comment(models.Model):
         (STATUS_DELETE, '删除')
     ]
 
-    target = models.ForeignKey(Post, verbose_name='评论目标', on_delete=models.CASCADE)
+    target = models.CharField(max_length=500, verbose_name='评论目标')      # 方便存储多对象
+    # target = models.ForeignKey(Post, verbose_name='评论目标', on_delete=models.CASCADE)       # 只能存储屏障的ID
     content = models.CharField(max_length=1000, verbose_name='内容')
-    nickname = models.CharField(max_length=50, verbose_name='昵称')
+    author = models.CharField(max_length=50, verbose_name='昵称')
     site = models.URLField(verbose_name='网站')
     email = models.EmailField(verbose_name='邮箱')
     status = models.PositiveIntegerField(choices=STATUS_ITEMS, default=STATUS_NORMAL, verbose_name='状态')
@@ -35,6 +36,10 @@ class Comment(models.Model):
         """ 得到最近评论 """
         recently_comments = cls.objects.filter(status=cls.STATUS_NORMAL)[:10:1]
         return recently_comments
+
+    @classmethod
+    def get_by_target(cls, target):
+        return cls.objects.filter(target=target, status=cls.STATUS_NORMAL)
 
 
 

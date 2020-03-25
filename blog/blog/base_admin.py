@@ -9,7 +9,7 @@ class BaseOwnerAdmin(admin.ModelAdmin):
     """
     exclude = ('author', )
 
-    # 重写Model.save_model方法:保存数据到数据库中
+    # 重写ModelAdmin.save_model方法:保存数据到数据库中
     # obj是当前要保存的对象，form是页面提交过来的表单之后的对象，change用来标示本次保存的数据是新增还是修改
     def save_model(self, request, obj, form, change):
         obj.author = request.user

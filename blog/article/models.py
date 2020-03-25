@@ -151,3 +151,4 @@ class Post(models.Model):
         return  hottest_posts
 
 
+

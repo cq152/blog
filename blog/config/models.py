@@ -24,7 +24,7 @@ class SidePane(models.Model):
         (TYPE_NORMAL, '每日一句'),
         (TYPE_HOT, '最热文章'),
         (TYPE_RECENT, '最新文章'),
-        (TYPE_COMMENTS, '最多评论')
+        (TYPE_COMMENTS, '最新评论')
     ]
 
     title = models.CharField(max_length=50, verbose_name='标题')

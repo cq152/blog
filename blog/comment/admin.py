@@ -10,4 +10,3 @@ from comment.models import Comment
 class CommentAdmin(BaseOwnerAdmin):
     list_display = ['content', 'status', 'created_time', ]
 
-

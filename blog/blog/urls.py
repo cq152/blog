@@ -16,8 +16,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from article.views import PostListView, PostDetailView, CategoryView, TagView
+from article.views import PostListView, PostDetailView, CategoryView, TagView, SearchView, AuthorView
 from blog.customsite import custom_site
+from comment.views import CommentView
 from config.views import links
 
 urlpatterns = [
@@ -26,6 +27,9 @@ urlpatterns = [
     url(r'^tag/(?P<tag_id>\d+)/$', TagView.as_view(), name='tag'),
     url(r'^post/(?P<pk>\d+).html$', PostDetailView.as_view(), name='detail'),
     url(r'^links/$', links),
+    url(r'^search/$', SearchView.as_view(), name='search'),
+    url(r'^author/(?P<author_id>\d+)/$', AuthorView.as_view(), name='author'),
+    url(r'^comment/$', CommentView.as_view(), name='comment'),
 
     url(r'^super_admin/', admin.site.urls),
     url(r'^admin/', custom_site.urls),

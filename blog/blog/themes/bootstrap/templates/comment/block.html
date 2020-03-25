@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评论</title>
+</head>
+<body>
+<hr/>
+    <div class="comment">
+        <form class="form-group" action="/comment/" method="POST">
+            {% csrf_token %}
+            <input name="target" type="hidden" value="{{ target }}"/>
+            {{ comment_form }}
+            <input type="submit" value="提交">
+        </form>
+
+        <ul>
+            {% for comment in comment_list %}
+            <li class="list_group_item">
+                <div class="author">
+                    <a href="{{ comment.site }}">{{ comment.author }}</a>
+                    <span>{{ comment.created_time }}</span>
+                </div>
+                <div class="comment-content">
+                    {{ comment.content }}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
