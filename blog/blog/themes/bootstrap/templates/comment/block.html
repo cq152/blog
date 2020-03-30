@@ -18,11 +18,19 @@
             {% for comment in comment_list %}
             <li class="list_group_item">
                 <div class="author">
+<<<<<<< HEAD
                     <a href="{{ comment.site }}">{{ comment.author }}</a>&nbsp&nbsp&nbsp
                     <span>{{ comment.created_time }}</span>
                 </div>
                 <div class="comment-content" style="font-size:20px;word-break:breakAll;">
                     &nbsp&nbsp&nbsp&nbsp{{ comment.content }}
+=======
+                    <a href="{{ comment.site }}">{{ comment.author }}</a>
+                    <span>{{ comment.created_time }}</span>
+                </div>
+                <div class="comment-content">
+                    {{ comment.content }}
+>>>>>>> 9b5008029a75eeb85bca6fcfca8ee5364ccb6382
                 </div>
             </li>
             {% endfor %}
