@@ -10,7 +10,7 @@
         <form class="form-group" action="/comment/" method="POST">
             {% csrf_token %}
             <input name="target" type="hidden" value="{{ target }}"/>
-            {{ comment_form }}
+            {{ comment_form }}<br>
             <input type="submit" value="提交">
         </form>
 
@@ -18,19 +18,13 @@
             {% for comment in comment_list %}
             <li class="list_group_item">
                 <div class="author">
-<<<<<<< HEAD
                     <a href="{{ comment.site }}">{{ comment.author }}</a>&nbsp&nbsp&nbsp
                     <span>{{ comment.created_time }}</span>
                 </div>
                 <div class="comment-content" style="font-size:20px;word-break:breakAll;">
+                    {% autoescape off %}
                     &nbsp&nbsp&nbsp&nbsp{{ comment.content }}
-=======
-                    <a href="{{ comment.site }}">{{ comment.author }}</a>
-                    <span>{{ comment.created_time }}</span>
-                </div>
-                <div class="comment-content">
-                    {{ comment.content }}
->>>>>>> 9b5008029a75eeb85bca6fcfca8ee5364ccb6382
+                    {% endautoescape %}
                 </div>
             </li>
             {% endfor %}

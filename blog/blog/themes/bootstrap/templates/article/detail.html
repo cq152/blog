@@ -4,7 +4,16 @@
 {% load comment_block %}
 <head>
     <meta charset="UTF-8">
-    {% block title %}{{ post.title }}{% endblock %}
+    {% block title %} {{ post.title }} {% endblock %}
+
+    {% block extra_head %}
+    <!--<link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css">-->
+    <!--<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>-->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    {% endblock %}
 </head>
 <body>
     {% block main %}
@@ -39,7 +48,9 @@
                 </span>
                 <span class="card-link">创建时间：{{ post.created_time }}</span>
                 <p class="card-text">
-                    {{ post.content }}
+                    {% autoescape off %}
+                    {{ post.content_html }}
+                    {% endautoescape %}
                 </p>
             </div>
         </div>

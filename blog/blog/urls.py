@@ -19,22 +19,14 @@ from django.contrib import admin
 from article.views import PostListView, PostDetailView, CategoryView, TagView, SearchView, AuthorView
 from blog.customsite import custom_site
 from comment.views import CommentView
-<<<<<<< HEAD
 from config.views import LinkView
-=======
-from config.views import links
->>>>>>> 9b5008029a75eeb85bca6fcfca8ee5364ccb6382
 
 urlpatterns = [
     url(r'^$', PostListView.as_view(), name='index'),
     url(r'^category/(?P<category_id>\d+)/$', CategoryView.as_view(), name='category'),
     url(r'^tag/(?P<tag_id>\d+)/$', TagView.as_view(), name='tag'),
     url(r'^post/(?P<pk>\d+).html$', PostDetailView.as_view(), name='detail'),
-<<<<<<< HEAD
     url(r'^links/$', LinkView.as_view(), name='links'),
-=======
-    url(r'^links/$', links),
->>>>>>> 9b5008029a75eeb85bca6fcfca8ee5364ccb6382
     url(r'^search/$', SearchView.as_view(), name='search'),
     url(r'^author/(?P<author_id>\d+)/$', AuthorView.as_view(), name='author'),
     url(r'^comment/$', CommentView.as_view(), name='comment'),

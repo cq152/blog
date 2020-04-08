@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import mistune
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -97,13 +98,14 @@ class Post(models.Model):
     tag = models.ManyToManyField(Tag, verbose_name='标签')
     summary = models.CharField(max_length=1024, blank=True, verbose_name='摘要')
     content = models.TextField(help_text='正文必须为MarkDown格式', verbose_name='正文')
+    content_html = models.TextField(verbose_name='正文_html', blank=True, editable=False)
     status = models.PositiveIntegerField(choices=STATUS_ITEMS, default=STATUS_NORMAL, verbose_name='状态')
     # auto_now_add 创建时赋值，auto_now 更新时赋值
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间', editable=False)
 
-    # 新增字段pv和uv，方便最新和最热文章的取数
-    pv = models.PositiveIntegerField(default=1)
-    uv = models.PositiveIntegerField(default=1)
+    # 新增字段pv和uv，方便最热文章与最活跃用户的取数
+    pv = models.PositiveIntegerField(default=0)
+    uv = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = verbose_name_plural = '文章'
@@ -111,6 +113,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.content_html = mistune.markdown(self.content)
+        super(Post, self).save()
 
     @staticmethod
     def get_by_tag(tag_id):
@@ -142,13 +149,13 @@ class Post(models.Model):
     def get_latest_posts(cls):
         """ 得到最新10篇文章 """
         latest_posts = cls.objects.filter(status=cls.STATUS_NORMAL)[:5:1]
-        return  latest_posts
+        return latest_posts
 
     @classmethod
     def get_hottest_posts(cls):
         """ 得到最热10篇文章 """
         hottest_posts = cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')[:5:1]
-        return  hottest_posts
+        return hottest_posts
 
 
 

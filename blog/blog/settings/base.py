@@ -15,7 +15,7 @@ SECRET_KEY = 'o7a+r4)rr8g37_#n_vsc7yo#qb4gr6iq6x4#p31%r=kb*@2kuk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     'config',
     'comment',
 
+    'rest_framework',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,6 +37,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'article.middleware.user_id.UserIDMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
