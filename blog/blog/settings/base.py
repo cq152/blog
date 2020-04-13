@@ -17,6 +17,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+XADMIN_TITLE = 'BLOG分享系统管理后台'
+XADMIN_FOOTER_TITLE = 'power by cq'
 
 # Application definition
 
@@ -26,6 +28,8 @@ INSTALLED_APPS = [
     'config',
     'comment',
 
+    'xadmin',
+    'crispy_forms',
     'rest_framework',
 
     'django.contrib.admin',

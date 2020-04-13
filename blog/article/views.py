@@ -83,7 +83,7 @@ class PostDetailView(CommonMixin, DetailView):
 
         if not cache.get(pv_key):
             increase_pv = True
-            cache.set(pv_key, 1, 1*60)      # 缓存一分钟有效
+            cache.set(pv_key, 1, 1*60)      # 缓存一分钟有效,cache.set(key,value,timeout)
         if not cache.get(uv_key):
             increase_uv = True
             cache.set(uv_key, 1, 24*60*60)  # 缓存24小时有效

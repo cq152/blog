@@ -18,7 +18,7 @@ class Category(models.Model):
 
     name = models.CharField(max_length=50, verbose_name='名称')
     status = models.IntegerField(choices=STATUS_ITEMS, default=STATUS_NORMAL, verbose_name='状态')
-    author = models.ForeignKey(User, verbose_name='作者', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, verbose_name='作者', on_delete=models.DO_NOTHING)
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间', editable=False)
     is_top = models.BooleanField(default=False, verbose_name='是否置顶导航')
 
@@ -69,7 +69,7 @@ class Tag(models.Model):
 
     name = models.CharField(max_length=50, verbose_name='名称')
     status = models.IntegerField(choices=STATUS_ITEMS, default=STATUS_NORMAL, verbose_name='状态')
-    author = models.ForeignKey(User, verbose_name='作者', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, verbose_name='作者', on_delete=models.DO_NOTHING)
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间', editable=False)
 
     class Meta:
@@ -92,8 +92,8 @@ class Post(models.Model):
 
     title = models.CharField(max_length=255, verbose_name='标题')
     # 多对一
-    author = models.ForeignKey(User, verbose_name='作者', on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, verbose_name='分类', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, verbose_name='作者', on_delete=models.DO_NOTHING)
+    category = models.ForeignKey(Category, verbose_name='分类', on_delete=models.DO_NOTHING)
     # 多对多
     tag = models.ManyToManyField(Tag, verbose_name='标签')
     summary = models.CharField(max_length=1024, blank=True, verbose_name='摘要')
@@ -157,5 +157,14 @@ class Post(models.Model):
         hottest_posts = cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')[:5:1]
         return hottest_posts
 
+#
+# class ArticlePostTag(models.Model):
+#     post = models.ForeignKey(Post, models.DO_NOTHING)
+#     tag = models.ForeignKey(Tag, models.DO_NOTHING)
+#
+#     class Meta:
+#         managed = False
+#         db_table = 'article_post_tag'
+#         unique_together = (('post', 'tag'),)
 
 

@@ -13,13 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import xadmin
 from django.conf.urls import url
-from django.contrib import admin
 
 from article.views import PostListView, PostDetailView, CategoryView, TagView, SearchView, AuthorView
-from blog.customsite import custom_site
 from comment.views import CommentView
 from config.views import LinkView
+from blog import adminx    # NOQA
+
+xadmin.autodiscover()
 
 urlpatterns = [
     url(r'^$', PostListView.as_view(), name='index'),
@@ -31,6 +33,5 @@ urlpatterns = [
     url(r'^author/(?P<author_id>\d+)/$', AuthorView.as_view(), name='author'),
     url(r'^comment/$', CommentView.as_view(), name='comment'),
 
-    url(r'^super_admin/', admin.site.urls),
-    url(r'^admin/', custom_site.urls),
+    url(r'^admin/', xadmin.site.urls, name='xadmin')
 ]
