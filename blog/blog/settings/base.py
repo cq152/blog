@@ -17,7 +17,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-XADMIN_TITLE = 'BLOG分享系统管理后台'
+XADMIN_TITLE = '博客共享系统管理后台'
 XADMIN_FOOTER_TITLE = 'power by cq'
 
 # Application definition
@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'rest_framework',
+    'ckeditor',
+    'ckeditor_uploader',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -127,3 +129,27 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 'full',
+        'tabSpaces': 4,
+        'extraPlugins': 'codesnippet',          # 配置代码插件
+    },
+}
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CKEDITOR_UPLOAD_PATH = 'article_images'
+
+DEFAULT_FILE_STORAGE = 'blog.storage.MyStorage'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 2,
+}

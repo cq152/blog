@@ -97,6 +97,7 @@ class Post(models.Model):
     # 多对多
     tag = models.ManyToManyField(Tag, verbose_name='标签')
     summary = models.CharField(max_length=1024, blank=True, verbose_name='摘要')
+    is_markdown = models.BooleanField(default=True, verbose_name='是否Markdown格式')
     content = models.TextField(help_text='正文必须为MarkDown格式', verbose_name='正文')
     content_html = models.TextField(verbose_name='正文_html', blank=True, editable=False)
     status = models.PositiveIntegerField(choices=STATUS_ITEMS, default=STATUS_NORMAL, verbose_name='状态')
@@ -116,7 +117,10 @@ class Post(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        self.content_html = mistune.markdown(self.content)
+        if self.is_markdown:
+            self.content_html = mistune.markdown(self.content)
+        else:
+            self.content_html = self.content
         super(Post, self).save()
 
     @staticmethod

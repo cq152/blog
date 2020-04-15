@@ -1,5 +1,6 @@
 # -*- coding: utf_8 -*-
 import mistune
+from ckeditor.widgets import CKEditorWidget
 from django import forms
 from .models import Comment
 
@@ -27,9 +28,10 @@ class CommentForm(forms.ModelForm):
     content = forms.CharField(
         max_length=500,
         label='评论内容（内容不得少于十个字符）',
-        widget=forms.widgets.Textarea(
-            attrs={'class': 'form-control', 'rows': 3, 'cols': 60}
-        )
+        widget=CKEditorWidget()
+        # widget=forms.widgets.Textarea(
+        #     attrs={'class': 'form-control', 'rows': 3, 'cols': 60}
+        # )
     )
 
     def clean_content(self):

@@ -14,3 +14,5 @@ def comment_block(target):
         'comment_form': CommentForm,
         'comment_list': Comment.get_by_target(target),
     }
+
+

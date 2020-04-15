@@ -77,11 +77,13 @@ class PostAdmin(BaseOwnerAdmin):
 
     # <class 'article.admin.PostAdmin'>: (admin.E109) The value of 'list_display[3]' must not be a ManyToManyField.
     # list_display 不能包含ManyToMany字段
-    list_display = ['title', 'author', 'category', 'summary', 'content', 'status', 'created_time', 'operator']
+    list_display = ['title', 'author', 'category', 'summary', 'pv', 'uv', 'created_time', 'operator']
     list_filter = ['category']
     list_display_links = ['title', ]
     #  注意外键“分类”的编写
     search_fields = ['title', 'category__name']
+    # 编辑页面不显示字段
+    exclude = ['author', 'pv', 'uv']
 
     # 编辑界面
     # save_on_top = True
@@ -98,6 +100,9 @@ class PostAdmin(BaseOwnerAdmin):
         Fieldset(
             '内容信息',
             'summary',
+            'is_markdown',
+            'content_ck',
+            'content_md',
             'content'
         ),
         Fieldset(
@@ -110,7 +115,7 @@ class PostAdmin(BaseOwnerAdmin):
     # 多对多标签选择，水平显示
     filter_horizontal = ('tag', )
     # 多对多标签选择，垂直显示
-    # filter_vertical = ('tag', )
+    filter_vertical = ('tag', )
 
     # 自定义函数???
     def operator(self, obj):

@@ -20,6 +20,6 @@ class BaseOwnerAdmin(object):
         # 防止超级管理员修改文章导致文章原作者被修改
         if not self.org_obj:
             self.new_obj.author = self.request.user
-        return super(BaseOwnerAdmin, self).save_model()
+        return super(BaseOwnerAdmin, self).save_models()
 
 
